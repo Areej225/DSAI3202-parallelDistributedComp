@@ -12,5 +12,5 @@ def evaluate_model(model, X_test, y_test):
     Returns:
         str: A classification report as a string.
     """
-predictions = model.predict(X_test)
-return classification_report(y_test, predictions)
+    predictions = model.predict(X_test)
+    return classification_report(y_test, predictions)

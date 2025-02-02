@@ -13,5 +13,5 @@ def split_data(data, test_size=0.2, random_state=42):
     """
     X = data.drop(columns=['species'])
     y = data['species']
-    return train_test_split(X, y, test_size=test_size, random_state=random_state)
+    return train_test_split(X, y, test_size=test_size,random_state=random_state)
 

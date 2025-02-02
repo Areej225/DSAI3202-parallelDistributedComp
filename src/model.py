@@ -11,6 +11,6 @@ def train_model(X_train, y_train):
     Returns:
         RandomForestClassifier: The trained model.
     """
-model = RandomForestClassifier(random_state=42)
-model.fit(X_train, y_train)
-return model
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
+    return model
