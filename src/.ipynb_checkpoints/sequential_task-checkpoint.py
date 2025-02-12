@@ -1,16 +1,11 @@
-import time  # Make sure to import time module
-from src.functions import generate_random_chars, generate_random_sum
+import time
+from src.functions import calculate_partial_sum
 
-# Function to run the sequential task
-def run_sequential():
-    # Measure time for generating random characters
+def run_sequential(n):
+    """Sequential summation from 1 to n"""
     start_time = time.time()
-    generate_random_chars()
+    result = calculate_partial_sum(1, n)
     end_time = time.time()
-    print(f"Time to generate random characters (sequential): {end_time - start_time} seconds.")
-    
-    # Measure time for generating random sum
-    start_time = time.time()
-    generate_random_sum()
-    end_time = time.time()
-    print(f"Time to generate random sum (sequential): {end_time - start_time} seconds.")
+
+    print(f"Sequential Sum: {result}")
+    print(f"Execution Time (Sequential): {end_time - start_time} seconds")
