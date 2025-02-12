@@ -3,26 +3,25 @@ from src.threads_task import run_threads
 from src.processes_task import run_processes
 import time
 
-def performance_analysis():
+def performance_analysis(n):
     num_threads = 4  
     num_processes = 4  
-    P = 0.9  # Assume 90% of the task is parallelizable
+    P = 0.9  
 
-    # Measure execution times
     print("\nRunning Sequential Execution...")
-    start = time.time()
-    run_sequential(10**7)  # Using 10 million as input
-    T_sequential = time.time() - start
+    start = time.perf_counter()
+    run_sequential(n)
+    T_sequential = time.perf_counter() - start
 
     print("\nRunning Threading Execution...")
-    start = time.time()
-    run_threads(10**7, num_threads)
-    T_threads = time.time() - start
+    start = time.perf_counter()
+    run_threads(n, num_threads)
+    T_threads = time.perf_counter() - start
 
     print("\nRunning Multiprocessing Execution...")
-    start = time.time()
-    run_processes(10**7, num_processes)
-    T_processes = time.time() - start
+    start = time.perf_counter()
+    run_processes(n, num_processes)
+    T_processes = time.perf_counter() - start
 
     # Compute Speedups
     S_threads = T_sequential / T_threads
@@ -40,7 +39,6 @@ def performance_analysis():
     S_G_threads = (1 - P) + (P * num_threads)
     S_G_processes = (1 - P) + (P * num_processes)
 
-    # Print results
     print("\n=== Performance Analysis Results ===")
     print(f"Sequential Time: {T_sequential:.6f} sec")
     print(f"Threading Time: {T_threads:.6f} sec, Speedup: {S_threads:.2f}, Efficiency: {E_threads:.2f}")
@@ -50,15 +48,17 @@ def performance_analysis():
     print(f"Gustafson’s Law Speedup (Threads): {S_G_threads:.2f}")
     print(f"Gustafson’s Law Speedup (Processes): {S_G_processes:.2f}")
 
-# Running tasks in order to match lab output
+# Run tasks
+N = 10**7  # 10 million for faster benchmarking
+
 print("task 3_a: sequential")
-run_sequential(10**7)
+run_sequential(N)
 
 print("\ntask 3_b: Parallelize with Threading")
-run_threads(10**7, 4)
+run_threads(N, 4)
 
 print("\ntask 3_c: Parallelize with Multiprocessing")
-run_processes(10**7, 4)
+run_processes(N, 4)
 
 print("\ntask 3_d: Performance analysis")
-performance_analysis()
+performance_analysis(N)
