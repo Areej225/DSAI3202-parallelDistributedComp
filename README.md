@@ -1,3 +1,3 @@
-# lab4-p2
+# lecture_dist
 
-#start lab4-p2
+
