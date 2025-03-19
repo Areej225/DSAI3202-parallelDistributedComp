@@ -17,7 +17,13 @@ def calculate_fitness(route,
     total_distance = 0
     
     # add your code here.
-    
+    for i in range(len(route) - 1):
+        dist = distance_matrix[route[i], route[i + 1]]
+        if dist == 10000:  
+            return -1e6  # Penalize infeasible routes immediately
+        total_distance += dist
+        
+    total_distance = total_distance * 1
     return total_distance
 
 
@@ -40,6 +46,20 @@ def select_in_tournament(population,
     selected = []
     
     # add your code here.
+    '''
+    for _ in range(number_tournaments):
+        tournament = np.random.choice(len(population), tournament_size,replace=False)
+        best_index = tournament[np.argmax(scores[tournament])]  # Select best based on highest (negative) fitness
+        selected.append(population[best_index])'''
+    for _ in range(number_tournaments):
+        # Randomly select tournament_size individuals from the population
+        idx = np.random.choice(len(population), tournament_size, replace=False)
+        
+        # Find the best individual based on fitness score
+        best_idx = idx[np.argmax(scores[idx])]
+        
+        # Append the best individual to the selected list
+        selected.append(population[best_idx])
     
     return selected
 
