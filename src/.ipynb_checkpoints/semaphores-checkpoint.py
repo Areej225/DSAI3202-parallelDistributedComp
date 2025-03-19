@@ -42,5 +42,20 @@ def main():
     for p in processes:
         p.join()
 
+def run_semaphore_simulation():
+    max_connections = 3
+    pool = ConnectionPool(max_connections)
+    processes = []
+    num_processes = 6
+
+    for i in range(num_processes):
+        p = multiprocessing.Process(target=access_database, args=(pool, i))
+        processes.append(p)
+        p.start()
+
+    for p in processes:
+        p.join()
+
 if __name__ == "__main__":
-    main()
+    run_semaphore_simulation()
+
