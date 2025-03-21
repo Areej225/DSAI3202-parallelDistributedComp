@@ -47,9 +47,14 @@ for generation in range(num_generations):
 
     # Gather fitness values at Rank 0
     all_fitness_values = comm.gather(local_fitness_values, root=0)
+
     if rank == 0:
         all_fitness_values = np.concatenate(all_fitness_values)
         current_best_calculate_fitness = np.min(all_fitness_values)
+
+        #  ELITISM: Save elite individual before changes
+        elite_individual = population[np.argmin(all_fitness_values)]
+
         if current_best_calculate_fitness < best_calculate_fitness:
             best_calculate_fitness = current_best_calculate_fitness
             stagnation_counter = 0
@@ -59,12 +64,11 @@ for generation in range(num_generations):
         # Regenerate population if stagnation occurs
         if stagnation_counter >= stagnation_limit:
             print(f"Regenerating at generation {generation}")
-            best_individual = population[np.argmin(all_fitness_values)]
             population = generate_unique_population(population_size - 1, num_nodes)
-            population.append(best_individual)
+            population.append(elite_individual)  # Always keep elite
             stagnation_counter = 0
             split_population = np.array_split(population, size)
-    
+
     # Broadcast stagnation status
     stagnation_counter = comm.bcast(stagnation_counter, root=0)
 
@@ -75,7 +79,7 @@ for generation in range(num_generations):
         parent1, parent2 = local_selected[i], local_selected[i + 1]
         child = [0] + order_crossover(parent1[1:], parent2[1:])
         local_offspring.append(child)
-    
+
     # Apply mutation
     local_mutated_offspring = [mutate(route, mutation_rate) for route in local_offspring]
 
@@ -88,6 +92,9 @@ for generation in range(num_generations):
         worst_indices = np.argsort(all_fitness_values)[-len(all_offspring):]
         for i, idx in enumerate(worst_indices):
             population[idx] = all_offspring[i]
+
+        #  ELITISM: Reinsert elite individual after replacement
+        population[worst_indices[-1]] = elite_individual
 
         # Split population again
         split_population = np.array_split(population, size)
