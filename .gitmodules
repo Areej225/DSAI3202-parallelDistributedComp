@@ -1,0 +1,3 @@
+[submodule "assignments/maze-runner"]
+	path = assignments/maze-runner
+	url = https://github.com/oussd/maze-runner
