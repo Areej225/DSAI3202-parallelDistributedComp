@@ -1,0 +1,7 @@
+Explorer,Maze Type,Moves,Time (s),Start,End
+BFS Explorer 1,Static,128,0.0014,"(11, 0)","(13, 47)"
+BFS Explorer 2,Static,128,0.0012,"(11, 0)","(13, 47)"
+BFS Explorer 3,Static,128,0.0013,"(11, 0)","(13, 47)"
+BFS Explorer 4,Static,128,0.0011,"(11, 0)","(13, 47)"
+BFS Explorer 5,Static,128,0.001,"(11, 0)","(13, 47)"
+BFS Explorer 6,Static,128,0.001,"(11, 0)","(13, 47)"

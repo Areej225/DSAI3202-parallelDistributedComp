@@ -35,6 +35,8 @@ def main():
     else:
         # Run the interactive game
         run_game(maze_type=args.type, width=args.width, height=args.height)
+        
+
 
 
 if __name__ == "__main__":
